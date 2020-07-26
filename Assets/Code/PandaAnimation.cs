@@ -33,7 +33,15 @@ public class PandaAnimation : MonoBehaviour
 
     private void AnimationUpdate()
     {
-        isWalking = agent.remainingDistance >= 0.05f;
+        if(agent.remainingDistance <= 0.05f)
+        {
+            isWalking = false;
+            ps.directed = false;
+        }
+        else
+        {
+            isWalking = true;
+        }
         anim.SetBool("walking", isWalking);
 
         if (!isWalking)
@@ -93,9 +101,16 @@ public class PandaAnimation : MonoBehaviour
                 state = animState.sitting;
             }
         }
-        else if(state == animState.sleeping || state == animState.sitting)
+        else if(state == animState.sleeping)
         {
-            if(UnityEngine.Random.Range(0, 1000) < idleChance)
+            if(UnityEngine.Random.Range(0, 10000) < idleChance)
+            {
+                state = animState.idle;
+            }
+        }
+        else if(state == animState.sitting)
+        {
+            if (UnityEngine.Random.Range(0, 1000) < idleChance)
             {
                 state = animState.idle;
             }
