@@ -20,6 +20,7 @@ public class PandaScript : MonoBehaviour
     public Image thirstMeter;
     public Image hungerMeter;
     public Image healthMeter;
+    public Text nametag;
 
     private float lastTick = 0.0f;
     private bool showMeters = false;
@@ -32,13 +33,15 @@ public class PandaScript : MonoBehaviour
 
     private NavMeshAgent nma;
     private Vector3 target;
+    public bool directed = false;
 
     private void Start()
     {
         mainCamera = Camera.main;
         meterCanvas.enabled = false;
         nma = GetComponent<NavMeshAgent>();
-        SetDestination(transform.position);
+        SetDestination(transform.position, false);
+        nametag.text = pandaName;
     }
 
     private void Update()
@@ -131,11 +134,12 @@ public class PandaScript : MonoBehaviour
         showMeters = false;
     }
 
-    public void SetDestination(Vector3 t)
+    public void SetDestination(Vector3 t, bool d)
     {
         target = t;
         transform.position = transform.position + new Vector3(0, 0.01f, 0);
         nma.SetDestination(target);
+        directed = d;
     }
 
     public void eat()

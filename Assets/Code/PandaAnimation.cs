@@ -101,10 +101,12 @@ public class PandaAnimation : MonoBehaviour
             }
         }
 
-        if (UnityEngine.Random.Range(0, 1000) < moveChance)
-        {
-            Vector3 newPos = new Vector3(UnityEngine.Random.Range(-10, 10), 0, UnityEngine.Random.Range(-10, 10));
-            agent.SetDestination(newPos);
+        if(state != animState.drinking && state != animState.eating && !ps.directed) {
+            if (UnityEngine.Random.Range(0, 1000) < moveChance)
+            {
+                Vector3 newPos = new Vector3(UnityEngine.Random.Range(-10, 10), 0, UnityEngine.Random.Range(-10, 10));
+                ps.SetDestination(newPos, false);
+            }
         }
     }
 

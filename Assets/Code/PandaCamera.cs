@@ -7,6 +7,8 @@ public class PandaCamera : MonoBehaviour
     public GameObject indicator;
     public MouseOrbit mo;
 
+    private Transform trackedObject;
+
     public void Update()
     {
         if (Input.GetKeyUp(KeyCode.Mouse0) && !mo.spinUnlocked)
@@ -19,15 +21,21 @@ public class PandaCamera : MonoBehaviour
                 {
                     Debug.Log(hit.transform.name);
                     Instantiate(indicator, hit.point, transform.rotation);
-                    PandaManager.movePanda(hit.point);
+                    PandaManager.movePanda(hit.point, true);
+                    trackedObject = null;
+                    mo.target.position = hit.point;
                 }
                 else
                 {
                     PandaManager.changeActivePanda(hit.transform.GetComponent<PandaScript>());
+                    trackedObject = hit.transform;
                 }
-
-                mo.target.position = hit.transform.position;
             }
+        }
+
+        if(trackedObject != null)
+        {
+            mo.target.position = trackedObject.position;
         }
     }
 }

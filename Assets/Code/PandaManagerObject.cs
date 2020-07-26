@@ -42,11 +42,11 @@ public static class PandaManager
         }
     }
 
-    public static void movePanda(Vector3 pos)
+    public static void movePanda(Vector3 pos, bool d)
     {
         if(activePanda != null)
         {
-            activePanda.SetDestination(pos);
+            activePanda.SetDestination(pos, d);
         }
     }
 
